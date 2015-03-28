@@ -31,22 +31,22 @@ def proc20():
 
 def proc21():
     for line in get_text_about_uk().splitlines():
-        if re.match(r'\[\[Category:(.*)\]\]', line):
+        if re.match(r'\[\[Category:(.+?)\]\]', line):
             print(line)
 
 
 def proc22():
     for line in get_text_about_uk().splitlines():
-        m = re.match(r'\[\[Category:(?P<category>[^|]*)(|.*)?\]\]', line)
+        m = re.match(r'\[\[Category:(.+?)(\|.+?)?\]\]', line)
         if m:
-            print(m.group('category'))
+            print(m.group(1))
 
 
 def proc23():
     for line in get_text_about_uk().splitlines():
-        m = re.match(r'(=+)([^=]*)(=+)', line)
+        m = re.match(r'(={2,})\s*(.+?)\s*(={2,})', line)
         if m:
-            print(len(m.group(1)), m.group(2))
+            print(len(m.group(1)) - 1, m.group(2))
 
 def main():
     if len(sys.argv) < 2:
