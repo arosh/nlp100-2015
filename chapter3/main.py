@@ -48,6 +48,39 @@ def proc23():
         if m:
             print(len(m.group(1)) - 1, m.group(2))
 
+
+def proc24():
+    it = re.finditer(r'\[\[(ファイル|File):(.+?)\|', get_text_about_uk())
+    for m in it:
+        print(m.group(2))
+
+
+def proc25():
+    d = {}
+    for line in get_text_about_uk().splitlines():
+        m = re.match(r'\|(.+?) = (.+)', line)
+        if m:
+            d[m.group(1)] = m.group(2)
+    return d
+
+
+def proc26():
+    d = {}
+    for k, v in proc25().iteritems():
+        s = re.sub(r'\'{2,}', '', v)
+        d[k] = s
+    return d
+
+
+def proc27():
+    d = {}
+    for k, v in proc26().iteritems():
+        s = re.sub(r'\[\[(.+?)((#.+?)?\|(.+?))?\]\]', '\g<1>', v)
+        d[k] = s
+        print(k, s)
+    return d
+
+
 def main():
     if len(sys.argv) < 2:
         print('usage: python {} NUM'.format(sys.argv[0]), file=sys.stderr)
